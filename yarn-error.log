@@ -11,7 +11,7 @@ Node version:
   16.14.2
 
 Platform: 
-  win32 x64
+  win32 x64 
 
 Trace: 
   Error: https://registry.yarnpkg.com/@type%2fjest: Not found

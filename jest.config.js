@@ -9,6 +9,6 @@ module.exports = async () => {
               lines: 80,
               statements: -10,
             },
-          },
+          }, 
     };
 };

@@ -12,4 +12,4 @@ module.exports={
         file: "./dist/rimaxState.js", format: "es", name: "RimaxState", sourcemap: true
     }],
     plugins: [],
-}
+} 
