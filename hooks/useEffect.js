@@ -1,5 +1,7 @@
 import { RXState } from "./useState.js"
 
+// salu
+
 export function useEffect(callback, states = []) {
     if (!Array.isArray(states)) throw new Error("states doit être une Array")
     const listRmv = []

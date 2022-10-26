@@ -1,6 +1,6 @@
 {
   "name": "rimax-state",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Un conteneur et gestionnaire d'état prévisible pour les applications JS",
   "main": "index.js",
   "repository": "https://github.com/WAROL52/rimaxState.git",

@@ -6,7 +6,11 @@ export { useLayoutEffect } from "./useLayoutEffect.js";
 export { useProps } from "./useProps.js";
 export { useEvent } from "./useEvent.js";
 export { useMemo } from "./useMemo.js";
+//TODO[x] render
+//TODO[x] html
+//TODO[x] component
 //TODO[x] useState
+//TODO[x] useCombine
 //TODO[x] useProps
 //TODO[x] useEvent
 //TODO[x] useRef
@@ -14,7 +18,8 @@ export { useMemo } from "./useMemo.js";
 //TODO[x] useHtml
 //TODO[x] useLayoutEffect
 //TODO[x] useReducer
-//TODO[] useLocalStorage
+//TODO[x] useLocalStorage
+//TODO[.] useFecth
 //TODO[] useForm
 //TODO[] useStore
 //TODO[] useCookie

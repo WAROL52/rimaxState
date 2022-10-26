@@ -3,7 +3,7 @@ const refSymbol=Symbol("$$ref")
 export default function useRef(value) {
     const [ref, changeRef] = useState(value)
     const OBJECT=Object
-    return OBJECT.freeze(new (class Object {
+    return OBJECT.freeze(new (class {
         constructor(){
             OBJECT.defineProperty(this,"current",{
                 get:(()=>ref.value).bind(),

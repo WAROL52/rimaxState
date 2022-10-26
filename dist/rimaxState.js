@@ -1,6 +1,6 @@
 const guardFn = v => v;
 const stateSymbol = Symbol("$$State");
-const isState = ((ref) => (typeof ref == "object") && stateSymbol === ref[".rxType"]).bind();
+const isState = ((ref) => (typeof ref == "object")&&!!ref&& stateSymbol === ref[".rxType"]).bind();
 class RXState {
     get isArray() { return Array.isArray(this.value) }
     toString() { return String(this.value) }
