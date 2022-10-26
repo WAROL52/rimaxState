@@ -1,2 +1,10 @@
-import * as RimaxState from "./hooks/indexHooks.js"
-export {RimaxState}
+export {
+    RXState,
+    useEffect,
+    useEvent,
+    useLayoutEffect,
+    useMemo,
+    useProps,
+    useRef,
+    useState
+} from "./hooks/indexHooks.js"

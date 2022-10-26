@@ -1,6 +1,6 @@
 const guardFn = v => v
 const stateSymbol = Symbol("$$State")
-const isState = ((ref) => (typeof ref == "object") && stateSymbol === ref[".rxType"]).bind()
+const isState = ((ref) => (ref instanceof RXState)&& stateSymbol === ref[".rxType"]).bind()
 export class RXState {
     get isArray() { return Array.isArray(this.value) }
     toString() { return String(this.value) }
@@ -20,7 +20,7 @@ function createState(value, guard) {
     const ACTIONS={}
     const dispatchUpdate = (option) => { UPDATE_EVENTS.forEach(fn =>fn(currentValueOfState, oldValueOfState, option)) }
     
-    return Object.freeze(new (class rxState extends RXState {
+    return Object.freeze(new (class extends RXState {
         get guards() { return [...GUARDS] }
         get isDestroyed() { return isDestroyed }
         get id() { return ID }
