@@ -64,13 +64,47 @@ type TypeSetArray<T extends any[]>=TypeSet<T>&{
     edits(index: number | T["findIndex"]|number[], value: T | ((currentValue: T,index:number, oldValue: T) => T)):any
     remove(index: number | T["findIndex"],deleteCount?:number):T[]
 }
-
-export declare type useState={
-    <TypeValue>(value?: TypeValue,guard?: (newState: TypeValue, oldState: TypeValue) => TypeValue): [RXState<PickTypeRXState<TypeValue>>, RXState<PickTypeRXState<TypeValue>>["set"]]
-    array:<T extends RXState<any[]>|Array<any>,U extends any[]=T extends RXState<Array<infer I>>?I[]:T>(value?:T)=>[RXState<U>,TypeSetArray<U>]
-    number:<T extends number|RXState<number>>(value?:T)=>[RXState<number>,TypeSet<number>]
-    string:<T extends string|RXState<string>>(value?:T)=>[RXState<string>,TypeSet<string>]
-    boolean:<T extends boolean|RXState<boolean>>(value?:T)=>[RXState<boolean>,TypeSet<boolean>]
-    symbol:<T extends symbol|RXState<symbol>>(value?:T)=>[RXState<symbol>,TypeSet<symbol>]
-    isState:(target:any)=>boolean
+interface TypeOptionState<T> {
+    methode: string;
+    value: T;
 }
+type TypeFnSet<T> = (newValue: T, oldValue: T, option: TypeOptionState<T>) => T;
+type TypeGet<TypeState> = {
+    <ReturnType = TypeState>(callback?: (state: TypeState) => ReturnType, dependencyList?: RXState<any>[]): ReturnType extends RXState<infer T> ? RXState<T> : RXState<ReturnType>;
+};
+type TypeSet<TypeState, actions> = {
+    (value: ((state: TypeState) => TypeState) | TypeState, option?: OnchangeOption<TypeState>): void;
+} & actions;
+interface OnchangeOption<TypeState> {
+    methode?: string;
+    value?: TypeState | any;
+}
+export abstract class RXState<V = any> {
+    abstract get isDestroyed(): boolean;
+    abstract get id(): number;
+    abstract clear(withDom?: false): void;
+    abstract destroy(withDom?: true): void;
+    abstract onCleanup(callback: (() => void)): () => void;
+    abstract onChange<T extends RXState>(state: T, callback?: (state?: V, oldState?: V, option?: OnchangeOption<V>) => T extends RXState<infer U> ? U : never): (...data: any[]) => void;
+    get: TypeGet<V>;
+    set: TypeSet<V, any>;
+    value: V;
+    abstract addGuard(guard: TypeFnSet<V>): () => boolean;
+    onChanges: (callbackOrState: RXState | ((newValue: V, oldValue: V, option: TypeOptionState<V>) => (() => void) | void), directApply?: boolean | ((newValue: V, oldValue: V, option: TypeOptionState<V>) => V)) => () => void;
+    get isArray(): boolean;
+    toString(): string;
+    valueOf(): V;
+    get [".rxType"](): any;
+    static isState: <T>(ref: T) => boolean;
+}
+type HandlerReducer<V, A> = {
+    [P in keyof A]: (currentState: V, payload: any) => V;
+};
+type PickTypeRXState<T> = T extends RXState<infer U> ? U : T;
+export const useState: {
+    <T, H extends HandlerReducer<T, H>>(value: T, handler?: {
+        guard?: TypeFnSet<T>;
+        reducer?: H;
+    }): [RXState<PickTypeRXState<T>>, any, H];
+    isState: <T_1>(ref: T_1) => boolean;
+};
