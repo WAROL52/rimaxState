@@ -3,7 +3,7 @@
   "version": "1.0.5",
   "description": "Un conteneur et gestionnaire d'état prévisible pour les applications JS",
   "exports": {
-    ".": "./index.js"
+    ".": "./index"
   },
   "repository": "https://github.com/WAROL52/rimaxState.git",
   "author": "WAROL52 <rabetsyrolio@gmail.com>",
