@@ -1,5 +1,5 @@
 
-export {default as useState,RXState} from "./useState.js";
+export {default as useState,RXState} from "./useState";
 export {default as useRef} from "./useRef.js";
 export { useEffect} from "./useEffect.js";
 export { useLayoutEffect } from "./useLayoutEffect.js";

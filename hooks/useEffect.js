@@ -1,4 +1,4 @@
-import { RXState } from "./useState.js"
+import { RXState } from "./useState"
 
 // salu
 

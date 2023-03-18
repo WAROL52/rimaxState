@@ -1,4 +1,4 @@
-import useState from "./useState.js"
+import useState from "./useState"
 const refSymbol=Symbol("$$ref")
 export default function useRef(value) {
     const [ref, changeRef] = useState(value)

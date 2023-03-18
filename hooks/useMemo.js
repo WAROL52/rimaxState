@@ -1,4 +1,4 @@
-import useState, { RXState } from "./useState.js"
+import useState, { RXState } from "./useState"
 
 export function useMemo(callback, states = []) {
     if (!Array.isArray(states)) throw new Error("states doit être une Array")

@@ -1,4 +1,4 @@
-import useState from "./useState.js";
+import useState from "./useState";
 
 export function useProps(props = {}) {
     if(typeof props !="object") throw new Error("props doit être une object")

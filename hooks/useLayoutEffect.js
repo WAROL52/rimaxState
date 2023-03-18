@@ -1,4 +1,4 @@
-import { RXState } from "./useState.js"
+import { RXState } from "./useState"
 
 export function useLayoutEffect(callback, states = []) {
     if (!Array.isArray(states)) throw new Error("states doit être une Array")
