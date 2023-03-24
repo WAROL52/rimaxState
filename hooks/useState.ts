@@ -1,6 +1,7 @@
 import { createState } from "./core/createState";
-import { RXState, isState, TypeFnSet } from "./core/RXState";
+import { RXState, isState } from "./core/RXState";
 import { stateType } from "./core/stateType";
+import { GuardCallbackType } from "./core/types";
 export { RXState } from "./core/RXState";
 const guardFn = (v) => v;
 type HandlerReducer<V, A> = {
@@ -8,12 +9,12 @@ type HandlerReducer<V, A> = {
 };
 type PickTypeRXState<T> = T extends RXState<infer U> ? U : T;
 export type StateHandler<T> = {
-  guard?: TypeFnSet<T>;
+  guard?: GuardCallbackType<T>[];
   reducer?: {};
 };
 
-const useState = <T>(value: T, handler?: StateHandler<T>) => {
-  const state = createState(value, handler);
+const useState = <T = any>(value?: T, handler?: StateHandler<T>) => {
+  const state = createState(value as T, handler);
   return state;
 };
 

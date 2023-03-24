@@ -1,20 +1,19 @@
 import useState from "../useState";
 import { insertArrayMethode } from "./insertArrayMethode";
-import {
-  OnchangeOption,
-  RXState,
-  TypeFnSet,
-  TypeOptionState,
-  TypeSet,
-} from "./RXState";
+import { RXState } from "./RXState";
 import { stateType } from "./stateType";
+import {
+  GuardCallbackOptionType,
+  GuardCallbackType,
+  OnchangeOptionType,
+} from "./types";
 export function createState<T>(value: T, guard): RXState<T> {
   let currentValueOfState;
   let oldValueOfState;
   let isDestroyed = false;
   let subscriber = 0;
   const ID = Math.random();
-  const GUARDS: TypeFnSet<T>[] = [];
+  const GUARDS: GuardCallbackType<T>[] = [];
   const DESTROY_EVENTS = new Set<() => void>();
   const UPDATE_EVENTS = new Set();
   const ACTIONS = {};
@@ -25,7 +24,7 @@ export function createState<T>(value: T, guard): RXState<T> {
     );
   };
   const _Object = Object;
-  const STATE = new (class _rxs extends RXState<T> {
+  const STATE = new (class extends RXState<T> {
     get guards() {
       return [...GUARDS];
     }
@@ -129,12 +128,12 @@ export function createState<T>(value: T, guard): RXState<T> {
       const toValidate = (
         value,
         oldValue = oldValueOfState,
-        option: TypeOptionState<T> = {}
+        option: GuardCallbackOptionType<T> = {}
       ) => {
         const oldValues: any[] = [];
-        return GUARDS.reduceRight((val, guardFn) => {
+        return GUARDS.reduce((val, guardFn) => {
           oldValues.push(val);
-          return guardFn(val, oldValue, option, [...oldValues]);
+          return guardFn(val, oldValue, { ...option, history: [...oldValues] });
         }, value);
       };
       if (!(value instanceof Promise)) {
@@ -144,7 +143,7 @@ export function createState<T>(value: T, guard): RXState<T> {
         callback: (
           state: T,
           oldState: T,
-          option: OnchangeOption<T>
+          option: OnchangeOptionType<T>
         ) => T = () => currentValueOfState,
         dependencies: any[] = [],
         guard = (v) => v
@@ -177,6 +176,7 @@ export function createState<T>(value: T, guard): RXState<T> {
         const listrmv = states.map((st) => {
           if (st instanceof RXState) {
             return st.onChange((_1, _2, option) => {
+              console.log(setState);
               setState(update(option));
               return () => !state.isDestroyed && state.destroy(true);
             });
@@ -230,6 +230,8 @@ export function createState<T>(value: T, guard): RXState<T> {
                 v instanceof Function ? v(currentValueOfState, payload) : v
               ))
         );
+      this[0] = this;
+      this[1] = this.set;
       if (value instanceof Promise) {
         value.then((v) => this.set(v));
       }
